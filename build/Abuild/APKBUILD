@@ -1,0 +1,35 @@
+pkgname=rpi-mailbox
+pkgver=0.1
+_commit="dd9ed5928da2553f43350136244b38ba3857f95d"
+pkgrel=0
+pkgdesc="Firmware mailbox driver for Raspberry Pi 3/4/5"
+arch=aarch64
+license="LicenseRef-QDL-Non-Commercial"
+depends="qnx-secpol"
+makedepends="qnx-security-dev qnx-io-sock-dev qnx-secpol-dev clang"
+options="!check"
+url=https://gitlab.com/qnx/projects/rpi-mailbox
+subpackages="$pkgname-dbg $pkgname-dev"
+source="https://gitlab.com/qnx/projects/rpi-mailbox/-/archive/$_commit/rpi-mailbox-$_commit.tar.gz"
+builddir="$srcdir/rpi-mailbox-$_commit"
+
+prepare() {
+    default_prepare
+}
+
+build() {
+    #TODO: add use information
+    clang -I./public ./rpi_mbox.c -o rpi_mbox -lsecpol  -ggdb -O2
+}
+
+package() {
+    install -m 0755 -d "$pkgdir"/usr/bin
+    install -m 0755 -d "$pkgdir"/usr/include/sys
+
+    cp "$builddir"/rpi_mbox "$pkgdir"/usr/bin
+    cp "$builddir"/public/sys/* "$pkgdir"/usr/include/sys
+}
+
+sha512sums="
+9f63053e1a9ac4d39d104ae38a6d6b123a8485ec62ed718cce07314402e1706880cf92b8be908512a4ea43a2e8898fd9b4013c8d029d23a8725f9baa3e1dfc51  rpi-mailbox-dd9ed5928da2553f43350136244b38ba3857f95d.tar.gz
+"
