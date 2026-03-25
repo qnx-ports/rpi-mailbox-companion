@@ -1,7 +1,7 @@
 pkgname=rpi-mailbox
 pkgver=0.1
 _commit="dd9ed5928da2553f43350136244b38ba3857f95d"
-pkgrel=${pkgrel:-0}
+pkgrel=0
 pkgdesc="Firmware mailbox driver for Raspberry Pi 3/4/5"
 arch=aarch64
 license="LicenseRef-QDL-Non-Commercial"
@@ -30,7 +30,6 @@ package() {
     cp "$builddir"/public/sys/* "$pkgdir"/usr/include/sys
 }
 
-options="$options ${DISABLE_CHECK:+!check}"
 sha512sums="
 9f63053e1a9ac4d39d104ae38a6d6b123a8485ec62ed718cce07314402e1706880cf92b8be908512a4ea43a2e8898fd9b4013c8d029d23a8725f9baa3e1dfc51  rpi-mailbox-dd9ed5928da2553f43350136244b38ba3857f95d.tar.gz
 "
